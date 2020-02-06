@@ -15,16 +15,16 @@ fit1=glm(Internal.Status1~Appointment.Lag,family=binomial(link='logit'),data=dat
 summary(fit1)
 exp(fit$coefficients)[2] # odds ratio of no-show with one day increase in lag 
 # GoF (ungrouped data) check Hosmer-Lemeshow for ungrouped data
-#library(ResourceSelection)
-#hoslem.test(fit$y, fitted(fit), g=10)  # fitted: returns \hat{pi}
+library(ResourceSelection)
+hoslem.test(fit$y, fitted(fit), g=10)  # fitted: returns \hat{pi}
 # fails to reject, fit is ok
 # 95% CI for beta
-# vcov(fit) # inverse of fisher information matrix
-#CI1=fit$coefficients + kronecker(t(c(0,qnorm(0.025),-qnorm(0.025))),t(t(sqrt(diag(vcov(fit))))))
-#out=cbind(exp(CI1)[-1,,drop=FALSE],coef(summary(fit))[-1,4,drop=FALSE])
-#colnames(out)=c('OR','95% CI','95% CI','p-value')
-#rownames(out)=c('Lag')
-#out
+ vcov(fit) # inverse of fisher information matrix
+CI1=fit$coefficients + kronecker(t(c(0,qnorm(0.025),-qnorm(0.025))),t(t(sqrt(diag(vcov(fit))))))
+out=cbind(exp(CI1)[-1,,drop=FALSE],coef(summary(fit))[-1,4,drop=FALSE])
+colnames(out)=c('OR','95% CI','95% CI','p-value')
+rownames(out)=c('Lag')
+out
 
 
 # EX2: Pub
